@@ -1,0 +1,39 @@
+version: '3'
+
+
+services:
+  reverse-proxy:
+    image: nginx
+    container_name: piwigo-nginx
+    volumes:
+      - ./default.conf:/etc/nginx/default.conf
+      - ./cert:/etc/nginx/certs
+    links: 
+      - piwigo
+    ports:
+      - 80:80
+      - 443:443
+    
+
+  piwigo:
+    container_name: piwigo
+    image: piwigo-docker
+    volumes :
+      - /data/piwigo/upload:/var/www/upload
+    links:
+      - mysql: piwigo_mysql
+
+      
+  mysql:
+    container_name: piwigo_mysql
+    image: mysql:8.0.18
+    volumes:
+      - /home/piwigo/mysql/:/var/lib/mysql
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    environment:
+      MYSQL_USER: "piwigo"
+      MYSQL_PASSWORD: "piwigo"
+      MYSQL_DATABASE: "piwigo"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    links: 
+      - piwigo
