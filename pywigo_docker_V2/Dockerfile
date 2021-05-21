@@ -18,7 +18,7 @@ RUN adduser -h /piwigo -DS piwigo
 RUN chown -R piwigo /piwigo/piwigo/local
 
 # chmod : permission accordé au dossier 
-RUN chmod 755 -R /piwigo
+RUN chmod 777 -R /piwigo
 
 # Modifie répertoire courant de travail par Piwigo :
 WORKDIR /piwigo
@@ -27,4 +27,4 @@ WORKDIR /piwigo
 USER piwigo
 
 # Execute php sur le port 8000 sous le nom de piwigo :
-CMD ["php","-S","80:80","-t","piwigo"]
+CMD ["php","-S","0.0.0.0:8000","-t","piwigo"]
