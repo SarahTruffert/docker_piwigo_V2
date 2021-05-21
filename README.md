@@ -4,4 +4,4 @@ Commands :
 $ docker build -t piwigo-docker ./
 $ docker-compose up -d
 
-/http://localhost:8000/
+To test the link : http://localhost:8000/
